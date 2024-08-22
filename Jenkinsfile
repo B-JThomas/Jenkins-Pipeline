@@ -15,26 +15,15 @@ pipeline {
 
         stage('Unit and Integration Tests') {
             steps {
-                script {
-                    echo 'Running unit and integration tests...'
-                    echo 'JUnit'
-                    logContent = currentBuild.rawBuild.getLog(100).join('\n')
-                }
+                echo 'Running unit and integration tests...'
+                echo 'JUnit'
             }
             post {
-                success {
-                    script {
-                        mail to: "${env.STAGE_EMAIL}",
-                             subject: "Pipeline Execution Testing",
-                             body: "Pipeline Test with result: Success. Please check the logs.\n\n${logContent}"
-                    }
-                }
-                failure {
-                    script {
-                        mail to: "${env.STAGE_EMAIL}",
-                             subject: "Pipeline Execution Security",
-                             body: "Pipeline Test with result: Failure. Please check the logs.\n\n${logContent}"
-                    }
+                always {
+                    mail to: "${env.EMAIL_RECIPIENTS}",
+                         subject: "Unit and Integration Tests Stage Status: ${currentBuild.currentResult}",
+                         body: "The Unit and Integration Tests stage has completed with status: ${currentBuild.currentResult}",
+                         attachLog: true
                 }
             }
         }
@@ -44,35 +33,19 @@ pipeline {
                 echo 'Analyzing code quality...'
                 echo 'SonarQube'
             }
-            post {
-                always {
-                    echo 'Code analysis complete'
-                }
-            }
         }
 
         stage('Security Scan') {
             steps {
-                script {
-                    echo 'Performing security scan...'
-                    echo 'OWASP'
-                    logContent = currentBuild.rawBuild.getLog(100).join('\n')
-                }
+                echo 'Performing security scan...'
+                echo 'OWASP'
             }
             post {
-                success {
-                    script {
-                        mail to: "${env.STAGE_EMAIL}",
-                             subject: "Pipeline Execution Security",
-                             body: "Pipeline Test with result: Success. Please check the logs.\n\n${logContent}"
-                    }
-                }
-                failure {
-                    script {
-                        mail to: "${env.STAGE_EMAIL}",
-                             subject: "Pipeline Execution Security",
-                             body: "Pipeline Test with result: Failure. Please check the logs.\n\n${logContent}"
-                    }
+               always {
+                    mail to: "${env.EMAIL_RECIPIENTS}",
+                         subject: "Security Scan Stage Status: ${currentBuild.currentResult}",
+                         body: "The Security Scan stage has completed with status: ${currentBuild.currentResult}",
+                         attachLog: true
                 }
             }
         }
@@ -90,11 +63,11 @@ pipeline {
                 echo 'Cypress'
             }
             post {
-                success {
-                    echo 'Integration tests on staging passed'
-                }
-                failure {
-                    echo 'Integration tests on staging failed'
+               always {
+                    mail to: "${env.EMAIL_RECIPIENTS}",
+                         subject: "Security Scan Stage Status: ${currentBuild.currentResult}",
+                         body: "The Security Scan stage has completed with status: ${currentBuild.currentResult}",
+                         attachLog: true
                 }
             }
         }
