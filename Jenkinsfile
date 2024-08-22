@@ -63,8 +63,8 @@ pipeline {
             post {
                always {
                     mail to: "${env.STAGE_EMAIL}",
-                         subject: "Security Scan Stage Status: ${currentBuild.currentResult}",
-                         body: "The Security Scan stage has completed with status: ${currentBuild.currentResult}"
+                         subject: "Stagin Scan Stage Status: ${currentBuild.currentResult}",
+                         body: "The Staging Scan stage has completed with status: ${currentBuild.currentResult}"
                 }
             }
         }
