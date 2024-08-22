@@ -22,14 +22,12 @@ pipeline {
                 success {
                     mail to: "${env.STAGE_EMAIL}",
                     subject: "Pipeline Execution Testing",
-                    body: "Pipeline Test with result: Success. Please check the logs.",
-                    attachLog: true
+                    body: "Pipeline Test with result: Success. Please check the logs.\n\n${logContent}"
                 }
                 failure {
                     mail to: "${env.STAGE_EMAIL}",
                     subject: "Pipeline Execution Security",
-                    body: "Pipeline Test with result: Failure. Please check the logs.",
-                    attachLog: true
+                    body: "Pipeline Test with result: Failure. Please check the logs.\n\n${logContent}"
                 }
             }
         }
@@ -55,14 +53,12 @@ pipeline {
                 success {
                     mail to: "${env.STAGE_EMAIL}",
                     subject: "Pipeline Execution Security",
-                    body: "Pipeline Test with result: Success. Please check the logs.",
-                    attachLog: true
+                    body: "Pipeline Test with result: Success. Please check the logs.\n\n${logContent}"
                 }
                 failure {
                     mail to: "${env.STAGE_EMAIL}",
                     subject: "Pipeline Execution Security",
-                    body: "Pipeline Test with result: Failure. Please check the logs.",
-                    attachLog: true
+                    body: "Pipeline Test with result: Failure. Please check the logs.\n\n${logContent}"
                 }
             }
         }
