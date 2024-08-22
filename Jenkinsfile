@@ -15,20 +15,26 @@ pipeline {
 
         stage('Unit and Integration Tests') {
             steps {
-                echo 'Running unit and integration tests...'
-                echo 'JUnit'
-                logContent = currentBuild.rawBuild.getLog(100).join('\n')
+                script {
+                    echo 'Running unit and integration tests...'
+                    echo 'JUnit'
+                    logContent = currentBuild.rawBuild.getLog(100).join('\n')
+                }
             }
             post {
                 success {
-                    mail to: "${env.STAGE_EMAIL}",
-                    subject: "Pipeline Execution Testing",
-                    body: "Pipeline Test with result: Success. Please check the logs.\n\n${logContent}"
+                    script {
+                        mail to: "${env.STAGE_EMAIL}",
+                             subject: "Pipeline Execution Testing",
+                             body: "Pipeline Test with result: Success. Please check the logs.\n\n${logContent}"
+                    }
                 }
                 failure {
-                    mail to: "${env.STAGE_EMAIL}",
-                    subject: "Pipeline Execution Security",
-                    body: "Pipeline Test with result: Failure. Please check the logs.\n\n${logContent}"
+                    script {
+                        mail to: "${env.STAGE_EMAIL}",
+                             subject: "Pipeline Execution Security",
+                             body: "Pipeline Test with result: Failure. Please check the logs.\n\n${logContent}"
+                    }
                 }
             }
         }
@@ -47,20 +53,26 @@ pipeline {
 
         stage('Security Scan') {
             steps {
-                echo 'Performing security scan...'
-                echo 'OWASP'
-                logContent = currentBuild.rawBuild.getLog(100).join('\n')
+                script {
+                    echo 'Performing security scan...'
+                    echo 'OWASP'
+                    logContent = currentBuild.rawBuild.getLog(100).join('\n')
+                }
             }
             post {
                 success {
-                    mail to: "${env.STAGE_EMAIL}",
-                    subject: "Pipeline Execution Security",
-                    body: "Pipeline Test with result: Success. Please check the logs.\n\n${logContent}"
+                    script {
+                        mail to: "${env.STAGE_EMAIL}",
+                             subject: "Pipeline Execution Security",
+                             body: "Pipeline Test with result: Success. Please check the logs.\n\n${logContent}"
+                    }
                 }
                 failure {
-                    mail to: "${env.STAGE_EMAIL}",
-                    subject: "Pipeline Execution Security",
-                    body: "Pipeline Test with result: Failure. Please check the logs.\n\n${logContent}"
+                    script {
+                        mail to: "${env.STAGE_EMAIL}",
+                             subject: "Pipeline Execution Security",
+                             body: "Pipeline Test with result: Failure. Please check the logs.\n\n${logContent}"
+                    }
                 }
             }
         }
