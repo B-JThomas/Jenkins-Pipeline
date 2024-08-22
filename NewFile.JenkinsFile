@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     environment {
-        STAGE_EMAIL = 'youremail@example.com'
-        // Add any other environment variables you need
+        STAGE_EMAIL = 'bailey.jthomas2@gmail.com'
     }
 
     stages {
@@ -21,22 +20,16 @@ pipeline {
             }
             post {
                 success {
-                    emailext (
-                        to: "${env.STAGE_EMAIL}",
-                        subject: "Pipeline Execution Completed",
-                        body: "Pipeline completed with result: ${currentBuild.currentResult}. Please check the logs.",
-                        attachLog: true
-                    )
-                }
-        }
+                    mail to: "${env.STAGE_EMAIL}",
+                    subject: "Pipeline Execution Testing",
+                    body: "Pipeline Test with result: Success. Please check the logs.",
+                    attachLog: true
                 }
                 failure {
-                    emailext (
-                        to: "${env.STAGE_EMAIL}",
-                        subject: "Pipeline Execution Completed",
-                        body: "Pipeline completed with result: ${currentBuild.currentResult}. Please check the logs.",
-                        attachLog: true
-                    )
+                    mail to: "${env.STAGE_EMAIL}",
+                    subject: "Pipeline Execution Security",
+                    body: "Pipeline Test with result: Failure. Please check the logs.",
+                    attachLog: true
                 }
             }
         }
@@ -59,13 +52,17 @@ pipeline {
                 echo 'OWASP'
             }
             post {
-                always {
-                    emailext (
-                        to: "${env.STAGE_EMAIL}",
-                        subject: "Security Scan Stage Completed: ${currentBuild.currentResult}",
-                        body: "Security scan has completed with result: ${currentBuild.currentResult}. Please check the logs.",
-                        attachLog: true
-                    )
+                success {
+                    mail to: "${env.STAGE_EMAIL}",
+                    subject: "Pipeline Execution Security",
+                    body: "Pipeline Test with result: Success. Please check the logs.",
+                    attachLog: true
+                }
+                failure {
+                    mail to: "${env.STAGE_EMAIL}",
+                    subject: "Pipeline Execution Security",
+                    body: "Pipeline Test with result: Failure. Please check the logs.",
+                    attachLog: true
                 }
             }
         }
