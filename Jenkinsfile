@@ -20,7 +20,7 @@ pipeline {
             }
             post {
                 always {
-                    mail to: "${env.EMAIL_RECIPIENTS}",
+                    mail to: "${env.STAGE_EMAIL}",
                          subject: "Unit and Integration Tests Stage Status: ${currentBuild.currentResult}",
                          body: "The Unit and Integration Tests stage has completed with status: ${currentBuild.currentResult}"
                 }
@@ -41,7 +41,7 @@ pipeline {
             }
             post {
                always {
-                    mail to: "${env.EMAIL_RECIPIENTS}",
+                    mail to: "${env.STAGE_EMAIL}",
                          subject: "Security Scan Stage Status: ${currentBuild.currentResult}",
                          body: "The Security Scan stage has completed with status: ${currentBuild.currentResult}"
                 }
@@ -62,7 +62,7 @@ pipeline {
             }
             post {
                always {
-                    mail to: "${env.EMAIL_RECIPIENTS}",
+                    mail to: "${env.STAGE_EMAIL}",
                          subject: "Security Scan Stage Status: ${currentBuild.currentResult}",
                          body: "The Security Scan stage has completed with status: ${currentBuild.currentResult}"
                 }
