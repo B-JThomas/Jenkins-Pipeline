@@ -17,6 +17,7 @@ pipeline {
             steps {
                 echo 'Running unit and integration tests...'
                 echo 'JUnit'
+                logContent = currentBuild.rawBuild.getLog(100).join('\n')
             }
             post {
                 success {
@@ -48,6 +49,7 @@ pipeline {
             steps {
                 echo 'Performing security scan...'
                 echo 'OWASP'
+                logContent = currentBuild.rawBuild.getLog(100).join('\n')
             }
             post {
                 success {
